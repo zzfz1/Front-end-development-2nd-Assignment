@@ -4,15 +4,22 @@ import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import Category from "./Category";
 
 export default function MovieList() {
   const s = useStates("main");
-
+  let filteredMovies =
+    s.selectedCategory === "All"
+      ? s.movies
+      : s.movies.filter((m) => {
+          return m.description.categories.includes(s.selectedCategory);
+        });
   return (
     <div className="bg-dark">
+      <Category></Category>
       <Container fluid="md">
         <Row xs={1} sm={2} md={3} xl={4} gap={3}>
-          {s.movies.map(({ slug, title, description: d }) => (
+          {filteredMovies.map(({ slug, title, description: d }) => (
             <Col className="my-3">
               <Link to={"/movie-detail/" + slug} className="movie-link">
                 <Card className="movie bg-secondary">

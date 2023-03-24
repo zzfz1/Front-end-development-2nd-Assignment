@@ -1,15 +1,20 @@
 import { useStates } from "./utilities/states";
 import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
+import Category from "./Category";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
 export default function ScreeningList() {
   const s = useStates("main");
-  let dates = new Set(
-    s.screeningsXmovies.map((sc) => sc.time.substring(0, 10))
-  );
+  let filteredScreenings =
+    s.selectedCategory === "All"
+      ? s.screeningsXmovies
+      : s.screeningsXmovies.filter((sc) => {
+          return sc.description.categories.includes(s.selectedCategory);
+        });
+  let dates = new Set(filteredScreenings.map((sc) => sc.time.substring(0, 10)));
   dates = [...dates];
   dates.sort((a, b) => new Date(a) - new Date(b));
   let screenInfos = [];
@@ -21,13 +26,14 @@ export default function ScreeningList() {
         month: "long",
         day: "numeric",
       }).format(new Date(date)),
-      screenings: s.screeningsXmovies.filter((sc) => {
+      screenings: filteredScreenings.filter((sc) => {
         return sc.time.substring(0, 10) == date;
       }),
     });
   }
   return (
     <div className="bg-dark">
+      <Category></Category>
       <Container fluid="md">
         {screenInfos.map((screenInfo) => {
           return (

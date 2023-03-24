@@ -1,5 +1,9 @@
 import { useEffect } from "react";
+import Button from "react-bootstrap/esm/Button";
+import Container from "react-bootstrap/esm/Container";
+import Table from "react-bootstrap/esm/Table";
 import { useParams } from "react-router-dom";
+import Category from "./Category";
 import { useStates } from "./utilities/states";
 
 export default function DisplayChairs() {
@@ -9,6 +13,9 @@ export default function DisplayChairs() {
     movie: null,
     seats: [],
     selectedCount: 0,
+    children: 0,
+    adults: 0,
+    seniors: 0,
   });
 
   useEffect(() => {
@@ -73,8 +80,12 @@ export default function DisplayChairs() {
     // select if not selected, deselect if selected
     if (seat.selected) {
       s.selectedCount -= 1;
+      if (s.adults != 0) s.adults -= 1;
+      else if (s.senior != 0) s.seniors -= 1;
+      else s.children -= 1;
     } else {
-      s;
+      s.adults += 1;
+      s.selectedCount += 1;
     }
     seat.selected = !seat.selected;
   }
@@ -119,6 +130,139 @@ export default function DisplayChairs() {
           </>
         ))}
       </div>
+      <Container className="mt-3">
+        <Table hover variant="dark">
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td>Total:</td>
+            </tr>
+            <tr>
+              <th>Adults</th>
+              <td className="d-flex flex-row justify-content-end">
+                <span className="mx-1">85 SEK * </span>
+                <span className="mx-2">
+                  <Button
+                    size="sm"
+                    style={{ height: "0.8 rem" }}
+                    disabled={s.adults === 0}
+                    onClick={() => {
+                      s.adults -= 1;
+                      s.children += 1;
+                    }}
+                  >
+                    -
+                  </Button>
+                  <span className="px-1"> {s.adults} </span>
+                  <Button
+                    size="sm"
+                    style={{ height: "0.8 rem" }}
+                    disabled={s.adults === s.selectedCount}
+                    onClick={() => {
+                      s.adults += 1;
+                      if (s.children) {
+                        s.children -= 1;
+                      } else {
+                        s.seniors -= 1;
+                      }
+                    }}
+                  >
+                    +
+                  </Button>
+                </span>
+              </td>
+              <td>
+                <span>{85 * s.adults}</span>
+              </td>
+            </tr>
+            <tr>
+              <th>Children</th>
+              <td className="d-flex flex-row justify-content-end">
+                <span className="mx-1">65 SEK * </span>
+                <span className="mx-2">
+                  <Button
+                    size="sm"
+                    style={{ height: "0.8 rem" }}
+                    onClick={() => {
+                      s.children -= 1;
+                      s.adults += 1;
+                    }}
+                    disabled={s.children === 0}
+                  >
+                    -
+                  </Button>
+                  <span className="px-1"> {s.children} </span>
+                  <Button
+                    size="sm"
+                    style={{ height: "0.8 rem" }}
+                    onClick={() => {
+                      s.children += 1;
+                      if (s.adults) {
+                        s.adults -= 1;
+                      } else {
+                        s.seniors -= 1;
+                      }
+                    }}
+                    disabled={s.children === s.selectedCount}
+                  >
+                    +
+                  </Button>
+                </span>
+              </td>
+              <td>
+                <span>{65 * s.children}</span>
+              </td>
+            </tr>
+            <tr>
+              <th>Seniors</th>
+              <td className="d-flex flex-row justify-content-end">
+                <span className="mx-1">75 SEK * </span>
+                <span className="mx-2">
+                  <Button
+                    size="sm"
+                    style={{ height: "0.8 rem" }}
+                    disabled={s.seniors === 0}
+                    onClick={() => {
+                      s.seniors -= 1;
+                      s.adults += 1;
+                    }}
+                  >
+                    -
+                  </Button>
+                  <span className="px-1"> {s.seniors} </span>
+                  <Button
+                    size="sm"
+                    style={{ height: "0.8 rem" }}
+                    disabled={s.seniors === s.selectedCount}
+                    onClick={() => {
+                      s.seniors += 1;
+                      if (s.adults) {
+                        s.adults -= 1;
+                      } else {
+                        s.children -= 1;
+                      }
+                    }}
+                  >
+                    +
+                  </Button>
+                </span>
+              </td>
+              <td>
+                <span>{75 * s.seniors}</span>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <th>{85 * s.adults + 75 * s.seniors + 65 * s.children}</th>
+            </tr>
+          </tbody>
+        </Table>
+        <div className="d-flex justify-content-end px-md-4 px-lg-5">
+          <Button>Check Out</Button>
+        </div>
+      </Container>
     </div>
   );
 }
