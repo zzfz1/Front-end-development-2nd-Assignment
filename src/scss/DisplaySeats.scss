@@ -1,0 +1,50 @@
+body {
+  background-color: black;
+  color: white;
+}
+
+.screening-and-seats {
+  text-align: center;
+}
+
+.seats {
+  text-align: center;
+}
+
+.seats > .seats-row {
+  display: inline-block;
+}
+
+.seats > .seats-row > div {
+  background-color: white;
+  color: black;
+  float: right;
+  // text-align: center;
+  padding-top: 3px;
+  border-top-left-radius: 25%;
+  border-top-right-radius: 25%;
+  width: 30px;
+  height: 30px;
+  margin: 3px 1px;
+  cursor: pointer;
+}
+
+.seats > .seats-row > .selected {
+  background-color: #72b457;
+  color: white;
+}
+
+.seats > .seats-row > .occupied {
+  background-color: rgb(152, 28, 28);
+  color: white;
+  cursor: not-allowed;
+}
+
+.poster-screen {
+  width: 350px;
+  object-fit: cover;
+  aspect-ratio: 20 / 9;
+  border: 5px solid #fff;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
