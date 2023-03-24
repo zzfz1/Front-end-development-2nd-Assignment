@@ -21,7 +21,7 @@ export default function MovieList() {
                       {title}
                     </Card.Title>
                     <Card.Text className="text-center text-white">
-                      Length: {d.length}
+                      Length: {Math.floor(d.length / 60)} h {d.length % 60} m
                       <br />
                       Categories: {d.categories.join(", ")}
                     </Card.Text>
@@ -29,7 +29,7 @@ export default function MovieList() {
                   <Card.Img
                     variant="bottom"
                     src={"https://cinema-rest.nodehill.se" + d.posterImage}
-                    style={{ objectFit: "cover", height: "14rem" }}
+                    style={{ objectFit: "cover", maxHeight: "14rem" }}
                   />
                 </Card>
               </Link>

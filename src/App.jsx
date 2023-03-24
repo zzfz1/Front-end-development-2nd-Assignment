@@ -5,7 +5,8 @@ import ScreeningList from "./ScreeningList";
 import MovieDetail from "./MovieDetail";
 import Welcome from "./Welcome";
 import DisplaySeats from "./DisplaySeats";
-import { Routes, Route } from "react-router-dom";
+import Page404 from "./Page404";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { kebabify } from "./utilities/kebabify";
 import { NavigationBar } from "./NavigationBar";
 
@@ -43,7 +44,7 @@ export default function App() {
   }, []);
 
   return s.movies.length === 0 ? null : (
-    <>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<NavigationBar />}>
           <Route index element={<Welcome />}></Route>
@@ -51,8 +52,9 @@ export default function App() {
           <Route path="screen-list" element={<ScreeningList />}></Route>
           <Route path="movie-detail/:slug" element={<MovieDetail />} />
           <Route path="booking/:screeningId" element={<DisplaySeats />} />
+          <Route path="*" element={<Page404 />}></Route>
         </Route>
       </Routes>
-    </>
+    </BrowserRouter>
   );
 }

@@ -8,6 +8,7 @@ export default function DisplayChairs() {
     screening: null,
     movie: null,
     seats: [],
+    selectedCount: 0,
   });
 
   useEffect(() => {
@@ -70,12 +71,17 @@ export default function DisplayChairs() {
       return;
     }
     // select if not selected, deselect if selected
+    if (seat.selected) {
+      s.selectedCount -= 1;
+    } else {
+      s;
+    }
     seat.selected = !seat.selected;
   }
 
   // output the seats
   return s.seats.length === 0 ? null : (
-    <div className="screening-and-seats">
+    <div className="screening-and-seats bg-dark text-white">
       <h1>{s.screening.movie}</h1>
       <h2>
         {new Intl.DateTimeFormat("en-US", {

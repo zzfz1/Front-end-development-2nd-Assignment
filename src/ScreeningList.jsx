@@ -12,7 +12,6 @@ export default function ScreeningList() {
   );
   dates = [...dates];
   dates.sort((a, b) => new Date(a) - new Date(b));
-  console.log(dates);
   let screenInfos = [];
   for (const date of dates) {
     screenInfos.push({
@@ -45,7 +44,8 @@ export default function ScreeningList() {
                               {title}
                             </Card.Title>
                             <Card.Text className="text-center text-white">
-                              Length: {d.length} minutes
+                              Length: {Math.floor(d.length / 60)} h{" "}
+                              {d.length % 60} m
                               <br />
                               Categories: {d.categories.join(", ")}
                               <br />

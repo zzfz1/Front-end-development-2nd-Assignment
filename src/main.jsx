@@ -4,12 +4,9 @@ import App from "./App";
 import "./scss/index.scss";
 import "./scss/DisplaySeats.scss";
 import "./utilities/auto-key-lists";
-import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <App />
   </React.StrictMode>
 );
