@@ -22,6 +22,16 @@ export default function Welcome() {
           </Link>
         </p>
       </div>
+      <div className="jumbotron text-center text-white bg-dark">
+        <h1>About Us</h1>
+        <p>
+          We are a small cinema that wants to start competing locally with SF.
+        </p>
+        <p>
+          We have two auditoriums "Lilla Salen" and "Stora Salen" and are
+          located in Småstad in Sweden.
+        </p>
+      </div>
       <TicketInfo></TicketInfo>
     </Container>
   );

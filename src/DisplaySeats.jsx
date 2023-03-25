@@ -4,6 +4,7 @@ import Container from "react-bootstrap/esm/Container";
 import Table from "react-bootstrap/esm/Table";
 import { useParams, Link } from "react-router-dom";
 import { useStates } from "./utilities/states";
+import { generateBookingNumber } from "./utilities/generate-booking-number";
 
 export default function DisplayChairs() {
   const { screeningId } = useParams();
@@ -17,6 +18,7 @@ export default function DisplayChairs() {
     seniors: 0,
     auditoriums: [],
     selectedSeats: [],
+    bookingNumber: "",
   });
 
   useEffect(() => {
@@ -270,7 +272,7 @@ export default function DisplayChairs() {
         </Table>
         <div className="d-flex justify-content-end px-md-4 px-lg-5">
           <Link
-            to={`/receipt?total=${
+            to={`/receipt?no=${generateBookingNumber()}&total=${
               85 * s.adults + 75 * s.seniors + 65 * s.children
             }&auditorium=${s.screening.auditorium}&movie=${
               s.screening.movie
