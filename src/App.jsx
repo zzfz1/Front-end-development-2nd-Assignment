@@ -10,7 +10,6 @@ import Receipt from "./Receipt";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { kebabify } from "./utilities/kebabify";
 import { NavigationBar } from "./NavigationBar";
-// import Category from "./Category";
 
 export default function App() {
   const s = useStates("main", {
@@ -60,7 +59,6 @@ export default function App() {
           <Route path="movie-detail/:slug" element={<MovieDetail />} />
           <Route path="booking/:screeningId" element={<DisplaySeats />} />
           <Route path="receipt" element={<Receipt />} />
-          {/* <Route path="category" element={<Category />} /> */}
           <Route path="*" element={<Page404 />}></Route>
         </Route>
       </Routes>

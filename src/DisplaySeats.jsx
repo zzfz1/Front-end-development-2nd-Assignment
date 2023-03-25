@@ -2,8 +2,7 @@ import { useEffect } from "react";
 import Button from "react-bootstrap/esm/Button";
 import Container from "react-bootstrap/esm/Container";
 import Table from "react-bootstrap/esm/Table";
-import { useParams } from "react-router-dom";
-import Category from "./Category";
+import { useParams, Link } from "react-router-dom";
 import { useStates } from "./utilities/states";
 
 export default function DisplayChairs() {
@@ -16,6 +15,8 @@ export default function DisplayChairs() {
     children: 0,
     adults: 0,
     seniors: 0,
+    auditoriums: [],
+    selectedSeats: [],
   });
 
   useEffect(() => {
@@ -79,11 +80,19 @@ export default function DisplayChairs() {
     }
     // select if not selected, deselect if selected
     if (seat.selected) {
+      s.selectedSeats = s.selectedSeats[seat.rowNumber].filter(
+        (se) => se.seatNumber !== seat.seatNumber
+      );
       s.selectedCount -= 1;
       if (s.adults != 0) s.adults -= 1;
       else if (s.senior != 0) s.seniors -= 1;
       else s.children -= 1;
     } else {
+      if (s.selectedSeats[seat.rowNumber]) {
+        s.selectedSeats[seat.rowNumber].push(seat.seatNumber);
+      } else {
+        s.selectedSeats[seat.rowNumber] = [seat.seatNumber];
+      }
       s.adults += 1;
       s.selectedCount += 1;
     }
@@ -260,7 +269,29 @@ export default function DisplayChairs() {
           </tbody>
         </Table>
         <div className="d-flex justify-content-end px-md-4 px-lg-5">
-          <Button>Check Out</Button>
+          <Link
+            to={`/receipt?total=${
+              85 * s.adults + 75 * s.seniors + 65 * s.children
+            }&auditorium=${s.screening.auditorium}&movie=${
+              s.screening.movie
+            }&seats=${encodeURIComponent(
+              JSON.stringify(s.selectedSeats)
+            )}&time=${new Intl.DateTimeFormat("en-US", {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+              hour: "numeric",
+              minute: "numeric",
+            }).format(
+              new Date(s.screening.screeningTime)
+            )}&type=${encodeURIComponent(
+              JSON.stringify([s.adults, s.seniors, s.children])
+            )}`}
+            replace
+          >
+            <Button>Check Out</Button>
+          </Link>
         </div>
       </Container>
     </div>
