@@ -20,7 +20,9 @@ export default function Category() {
             }}
           >
             <Button
-              className="category-link"
+              className={`category-link ${
+                s.selectedCategory === "All" ? "active-category" : ""
+              }`}
               variant="link"
               onClick={() => (s.selectedCategory = "All")}
             >
@@ -28,7 +30,9 @@ export default function Category() {
             </Button>
             {s.categories.map(({ title }) => (
               <Button
-                className="category-link"
+                className={`category-link ${
+                  s.selectedCategory === title ? "active-category" : ""
+                }`}
                 variant="link"
                 onClick={() => (s.selectedCategory = title)}
               >
