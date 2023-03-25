@@ -5,6 +5,7 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Category from "./Category";
+import SearchBar from "./SeachBar";
 
 export default function MovieList() {
   const s = useStates("main");
@@ -14,8 +15,15 @@ export default function MovieList() {
       : s.movies.filter((m) => {
           return m.description.categories.includes(s.selectedCategory);
         });
+  filteredMovies =
+    s.searchText === ""
+      ? filteredMovies
+      : filteredMovies.filter((sc) =>
+          sc.title.toLowerCase().includes(s.searchText.toLowerCase())
+        );
   return (
     <div className="bg-dark">
+      <SearchBar></SearchBar>
       <Category></Category>
       <Container fluid="md">
         <Row xs={1} sm={2} md={3} xl={4} gap={3}>

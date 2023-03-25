@@ -5,6 +5,7 @@ import Category from "./Category";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import SearchBar from "./SeachBar";
 
 export default function ScreeningList() {
   const s = useStates("main");
@@ -14,6 +15,12 @@ export default function ScreeningList() {
       : s.screeningsXmovies.filter((sc) => {
           return sc.description.categories.includes(s.selectedCategory);
         });
+  filteredScreenings =
+    s.searchText === ""
+      ? filteredScreenings
+      : filteredScreenings.filter((sc) =>
+          sc.title.toLowerCase().includes(s.searchText.toLowerCase())
+        );
   let dates = new Set(filteredScreenings.map((sc) => sc.time.substring(0, 10)));
   dates = [...dates];
   dates.sort((a, b) => new Date(a) - new Date(b));
@@ -33,6 +40,7 @@ export default function ScreeningList() {
   }
   return (
     <div className="bg-dark">
+      <SearchBar></SearchBar>
       <Category></Category>
       <Container fluid="md">
         {screenInfos.map((screenInfo) => {

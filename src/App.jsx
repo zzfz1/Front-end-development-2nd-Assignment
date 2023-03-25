@@ -19,6 +19,7 @@ export default function App() {
     sortingOrders: 1,
     categories: [],
     selectedCategory: "All",
+    searchText: "",
   });
 
   useEffect(() => {
