@@ -271,31 +271,33 @@ export default function DisplayChairs() {
             </tr>
           </tbody>
         </Table>
-        <div className="d-flex justify-content-end px-md-4 px-lg-5">
-          <Link
-            to={`/receipt?no=${generateBookingNumber()}&total=${
-              85 * s.adults + 75 * s.seniors + 65 * s.children
-            }&auditorium=${s.screening.auditorium}&movie=${
-              s.screening.movie
-            }&seats=${encodeURIComponent(
-              JSON.stringify(s.selectedSeats)
-            )}&time=${new Intl.DateTimeFormat("en-US", {
-              weekday: "long",
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-              hour: "numeric",
-              minute: "numeric",
-            }).format(
-              new Date(s.screening.screeningTime)
-            )}&type=${encodeURIComponent(
-              JSON.stringify([s.adults, s.seniors, s.children])
-            )}`}
-            replace
-          >
-            <Button>Check Out</Button>
-          </Link>
-        </div>
+        {85 * s.adults + 75 * s.seniors + 65 * s.children === 0 ? null : (
+          <div className="d-flex justify-content-end px-md-4 px-lg-5">
+            <Link
+              to={`/receipt?no=${generateBookingNumber()}&total=${
+                85 * s.adults + 75 * s.seniors + 65 * s.children
+              }&auditorium=${s.screening.auditorium}&movie=${
+                s.screening.movie
+              }&seats=${encodeURIComponent(
+                JSON.stringify(s.selectedSeats)
+              )}&time=${new Intl.DateTimeFormat("en-US", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+              }).format(
+                new Date(s.screening.screeningTime)
+              )}&type=${encodeURIComponent(
+                JSON.stringify([s.adults, s.seniors, s.children])
+              )}`}
+              replace
+            >
+              <Button>Check Out</Button>
+            </Link>
+          </div>
+        )}
       </Container>
     </div>
   );
